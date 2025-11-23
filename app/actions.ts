@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 
 // --- Auth Actions ---
 
-export async function login(formData: FormData) {
+export async function login(prevState: any, formData: FormData) {
   const password = formData.get('password') as string;
   
   if (password === process.env.ADMIN_PASSWORD) {
@@ -44,6 +44,25 @@ export async function createChatbot(formData: FormData) {
       description,
       system_instruction,
       is_active: true,
+    },
+  });
+
+  revalidatePath('/admin');
+  revalidatePath('/');
+  redirect('/admin');
+}
+
+export async function updateChatbot(id: string, formData: FormData) {
+  const name = formData.get('name') as string;
+  const description = formData.get('description') as string;
+  const system_instruction = formData.get('system_instruction') as string;
+
+  await prisma.chatbot.update({
+    where: { id },
+    data: {
+      name,
+      description,
+      system_instruction,
     },
   });
 
