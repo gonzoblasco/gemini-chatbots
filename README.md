@@ -1,69 +1,83 @@
-# Gemini Chatbots - Walkthrough
+# Catálogo de Chatbots Gemini
 
-## Resumen
+Una plataforma web para crear, gestionar y desplegar chatbots personalizados potenciados por la API de Google Gemini.
 
-Has creado un catálogo de chatbots potenciados por Google Gemini. La aplicación permite a los usuarios chatear con diferentes "personas" y a los administradores gestionar estos bots.
+## Características
 
-## Tecnologías
+- **Catálogo Público:** Vista estilo galería donde los usuarios pueden explorar los chatbots disponibles.
+- **Chat en Tiempo Real:** Interfaz de chat moderna con respuestas en streaming (efecto máquina de escribir).
+- **Panel de Administración:**
+  - Acceso protegido por contraseña.
+  - **CRUD de Chatbots:** Crear, Editar, Eliminar y Activar/Desactivar bots.
+  - **Editor de Prompts:** Define la personalidad y reglas de cada bot mediante "System Instructions".
+- **Diseño Premium:** Interfaz con estilo "Glassmorphism" (efectos de vidrio y desenfoque).
 
-- **Frontend:** Next.js 16 (App Router), TailwindCSS (Glassmorphism).
-- **Backend:** Next.js Server Actions & API Routes.
-- **AI:** Vercel AI SDK + Google Gemini API.
-- **Base de Datos:** SQLite + Prisma ORM.
+## Stack Tecnológico
 
-## Configuración Inicial
+- **Framework:** [Next.js 15](https://nextjs.org/) (App Router)
+- **Lenguaje:** TypeScript
+- **Estilos:** TailwindCSS
+- **IA:** [Vercel AI SDK](https://sdk.vercel.ai/docs) + Google Gemini Provider
+- **Base de Datos:** SQLite (vía Prisma ORM)
+- **Autenticación:** Custom (Cookies/Server Actions)
 
-### 1. Variables de Entorno
+## Configuración e Instalación
 
-Asegúrate de configurar tu API Key de Google en `.env.local`:
+### 1. Requisitos Previos
+
+- Node.js 18+
+- Una API Key de [Google AI Studio](https://aistudio.google.com/)
+
+### 2. Instalación
 
 ```bash
+# Clonar el repositorio
+git clone <url-del-repo>
+cd gemini-chatbots
+
+# Instalar dependencias
+npm install
+```
+
+### 3. Variables de Entorno
+
+Crea un archivo `.env.local` en la raíz del proyecto:
+
+```env
+# API Key de Google Gemini
 GOOGLE_GENERATIVE_AI_API_KEY=tu_api_key_aqui
-ADMIN_PASSWORD=secret
-AUTH_SECRET=secret
+
+# Contraseña para el panel de administración
+ADMIN_PASSWORD=tu_password_seguro
 ```
 
-### 2. Base de Datos
+### 4. Base de Datos
 
-La base de datos SQLite ya está inicializada en `prisma/dev.db`.
-Si necesitas resetearla:
+Inicializa la base de datos SQLite con Prisma:
 
 ```bash
-npx prisma migrate reset
+# Crear las tablas en la base de datos local (dev.db)
+npx prisma migrate dev --name init
 ```
 
-## Cómo Ejecutar
+### 5. Ejecutar
 
 ```bash
 npm run dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+La aplicación estará disponible en `http://localhost:3000`.
 
-## Guía de Uso
+## Estructura del Proyecto
 
-### Catálogo Público (Home)
+- `/app`: Rutas de la aplicación (Next.js App Router).
+  - `(public)`: Rutas públicas (Catálogo, Chat).
+  - `(admin)`: Rutas protegidas del panel de administración.
+  - `api/chat`: Endpoint para el streaming de respuestas de IA.
+- `/components`: Componentes de UI reutilizables.
+- `/prisma`: Esquema de la base de datos y migraciones.
+- `/lib`: Utilidades y configuración.
 
-- Verás una lista de chatbots activos.
-- Haz clic en "Chatear ahora" para iniciar una conversación.
-- **Nota:** Si no hay bots, ve al panel de admin para crear uno.
+## Licencia
 
-### Panel de Administración
-
-- Accede a: [http://localhost:3000/admin](http://localhost:3000/admin)
-- **Login:** Usa la contraseña configurada en `.env.local` (Default: `secret`).
-- **Dashboard:**
-  - **Nuevo Chatbot:** Crea un bot con nombre, descripción y prompt.
-  - **Toggle:** Activa/Desactiva bots.
-  - **Eliminar:** Borra bots permanentemente.
-
-### Chat
-
-- La interfaz de chat soporta streaming de texto en tiempo real.
-- Usa el modelo `gemini-1.5-flash` por defecto (rápido y eficiente).
-
-## Próximos Pasos (Roadmap)
-
-- [ ] Implementar autenticación real de usuarios (NextAuth con Google/Email).
-- [ ] Integrar pagos para acceso a modelos Pro.
-- [ ] Migrar base de datos a PostgreSQL (Supabase) para producción.
+MIT
