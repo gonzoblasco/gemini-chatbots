@@ -32,7 +32,7 @@ Una plataforma web para crear, gestionar y desplegar chatbots personalizados pot
 
 ```bash
 # Clonar el repositorio
-git clone <url-del-repo>
+git clone https://github.com/gonzoblasco/gemini-chatbots
 cd gemini-chatbots
 
 # Instalar dependencias
