@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gemini Chatbots - Walkthrough
 
-## Getting Started
+## Resumen
 
-First, run the development server:
+Has creado un catálogo de chatbots potenciados por Google Gemini. La aplicación permite a los usuarios chatear con diferentes "personas" y a los administradores gestionar estos bots.
+
+## Tecnologías
+
+- **Frontend:** Next.js 16 (App Router), TailwindCSS (Glassmorphism).
+- **Backend:** Next.js Server Actions & API Routes.
+- **AI:** Vercel AI SDK + Google Gemini API.
+- **Base de Datos:** SQLite + Prisma ORM.
+
+## Configuración Inicial
+
+### 1. Variables de Entorno
+
+Asegúrate de configurar tu API Key de Google en `.env.local`:
+
+```bash
+GOOGLE_GENERATIVE_AI_API_KEY=tu_api_key_aqui
+ADMIN_PASSWORD=secret
+AUTH_SECRET=secret
+```
+
+### 2. Base de Datos
+
+La base de datos SQLite ya está inicializada en `prisma/dev.db`.
+Si necesitas resetearla:
+
+```bash
+npx prisma migrate reset
+```
+
+## Cómo Ejecutar
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Guía de Uso
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Catálogo Público (Home)
 
-## Learn More
+- Verás una lista de chatbots activos.
+- Haz clic en "Chatear ahora" para iniciar una conversación.
+- **Nota:** Si no hay bots, ve al panel de admin para crear uno.
 
-To learn more about Next.js, take a look at the following resources:
+### Panel de Administración
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Accede a: [http://localhost:3000/admin](http://localhost:3000/admin)
+- **Login:** Usa la contraseña configurada en `.env.local` (Default: `secret`).
+- **Dashboard:**
+  - **Nuevo Chatbot:** Crea un bot con nombre, descripción y prompt.
+  - **Toggle:** Activa/Desactiva bots.
+  - **Eliminar:** Borra bots permanentemente.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Chat
 
-## Deploy on Vercel
+- La interfaz de chat soporta streaming de texto en tiempo real.
+- Usa el modelo `gemini-1.5-flash` por defecto (rápido y eficiente).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Próximos Pasos (Roadmap)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Implementar autenticación real de usuarios (NextAuth con Google/Email).
+- [ ] Integrar pagos para acceso a modelos Pro.
+- [ ] Migrar base de datos a PostgreSQL (Supabase) para producción.
